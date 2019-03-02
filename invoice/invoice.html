@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <header>
+      <ul class="user-info">
+        <li>{{ user.company }}</li>
+        <li>{{ user.email }}</li>
+        <li>{{ user.phone }}</li>
+        <li>{{ user.mobile }}</li>
+        <li>
+          <strong>{{ user.street }}</strong>
+        </li>
+        <li>
+          <strong>{{ user.zip }} {{ user.city }}</strong>
+        </li>
+        <li>
+          <strong>{{ user.country }}</strong>
+        </li>
+      </ul>
+
+      <div>
+        <p>
+          {{ client.company }}, {{ client.street }}, {{ client.zip }}
+          {{ client.city }}, {{ client.country }}
+        </p>
+        <ul class="client-info">
+          <li>{{ client.company }}</li>
+          <li>{{ client.name }}</li>
+          <li>{{ client.street }}</li>
+          <li>{{ client.zip }} {{ client.city }}</li>
+        </ul>
+        <table>
+          <tbody>
+            <tr>
+              <td>Rechnungsdatum:</td>
+              <td>{{ invoice.date }}</td>
+            </tr>
+            <tr>
+              <td>Kundennummer:</td>
+              <td>{{ invoice.date }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </header>
+    <div class="subject">
+      <h2>Rechnung {{ invoice.invoiceId }}</h2>
+    </div>
+    <div class="invoice-content">
+      <p>Sehr geehrte Damen und Herren</p>
+
+      <div>
+        <table>
+          <tbody>
+            <thead>
+              <td>Leistung</td>
+              <td></td>
+              <td>Preis</td>
+            </thead>
+            <tr>
+              <td>
+                {{ invoice.serviceCount }} x Post. Für die geleisteten Fahrten
+                vom {{ invoice.period }}
+              </td>
+              <td></td>
+              <td>
+                {{ invoice.pricePerService }}
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Zwischensumme: (exkl. USt):</td>
+              <td>{{ invoice.subTotal }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Umsatzsteuer:</td>
+              <td>{{ invoice.vac }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Rechnungsbetrag:</td>
+              <td>{{ invoice.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <p>Bitte überweisen Sie den Rechnungsbetrag.</p>
+          <p>Leistungsdatum für diese Rechnung: {{ invoice.date }}</p>
+          <p>Mit freundlichen Grüßen</p>
+          <p>{{ user.name }} (e.h.)</p>
+        </div>
+      </div>
+    </div>
+    <div class="account">
+      <p>Bankverbindung: {{ user.account[0].name }}</p>
+      <p>IBAN: {{ user.account[0].iban }}, BIC: {{ user.account[0].bic }}</p>
+      <p>UID: {{ user.account[0].uid }}</p>
+      <p>Gerichtsstand: {{ user.account[0].court }}</p>
+    </div>
+  </body>
+</html>
