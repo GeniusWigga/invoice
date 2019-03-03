@@ -13,6 +13,8 @@
   "author": "konstantinaxt",
   "license": "MIT",
   "dependencies": {
+    "accounting": "^0.4.1",
+    "dayjs": "^1.8.8",
     "handlebars": "4.1.0",
     "lodash": "4.17.11",
     "lowdb": "1.0.0",

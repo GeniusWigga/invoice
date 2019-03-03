@@ -20,10 +20,15 @@ async function pdf(content) {
   try {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    await page.waitFor("*");
+    await page.setContent(content, {
+      waitUntil: ["domcontentloaded", "networkidle0"]
+    });
     await page.emulateMedia("print");
-    await page.setContent(content);
 
-    return page.pdf({ printBackground: true });
+    const pdf = await page.pdf();
+    await browser.close();
+    return pdf;
   } catch (error) {
     return error;
   }

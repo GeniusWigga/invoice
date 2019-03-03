@@ -21,7 +21,7 @@
         border: 1px solid #cecece;
         font-family: "Lato", sans-serif;
         font-size: 14px;
-        height: 293mm;
+        height: 275mm;
         width: 210mm;
         margin: 0 auto;
       }
@@ -120,6 +120,23 @@
       .service-table tbody tr:first-of-type {
         border-bottom: 1px solid #cecece;
       }
+
+      .mail-to {
+        margin-top: 30px;
+        display: inline-block;
+        padding: 10px 0;
+        color: black;
+      }
+
+      @media print {
+        body {
+          border: none;
+        }
+
+        .mail-to {
+          display: none;
+        }
+      }
     </style>
   </head>
 
@@ -164,7 +181,7 @@
             <tbody>
               <tr>
                 <td>Rechnungsdatum:</td>
-                <td>{{ invoice.date }}</td>
+                <td>{{ date.start }}</td>
               </tr>
               <tr>
                 <td>Kundennummer:</td>
@@ -176,7 +193,7 @@
       </div>
     </header>
     <div class="subject">
-      <h2>Rechnung {{ invoice.invoiceId }}</h2>
+      <h2>Rechnung {{ invoice.id }}</h2>
     </div>
     <div class="invoice-content">
       <p>Sehr geehrte Damen und Herren</p>
@@ -192,33 +209,33 @@
             <tr>
               <td>
                 {{ invoice.count }} x Post. Für die geleisteten Fahrten vom
-                {{ invoice.period }}
+                {{ date.start }} - {{ date.end }}
               </td>
               <td></td>
-              <td>{{ invoice.price }} €</td>
+              <td>{{ invoice.price }}</td>
             </tr>
             <tr>
               <td></td>
               <td>Zwischensumme: (exkl. USt):</td>
-              <td>{{ invoice.subTotal }} €</td>
+              <td>{{ invoice.subTotal }}</td>
             </tr>
             <tr>
               <td></td>
               <td>Umsatzsteuer:</td>
-              <td>{{ invoice.vac }} €</td>
+              <td>{{ invoice.vac }}</td>
             </tr>
             <tr>
               <td></td>
               <td class="border"><strong>Rechnungsbetrag:</strong></td>
               <td class="border">
-                <strong>{{ invoice.total }} €</strong>
+                <strong>{{ invoice.total }}</strong>
               </td>
             </tr>
           </tbody>
         </table>
         <div>
           <p>Bitte überweisen Sie den Rechnungsbetrag.</p>
-          <p>Leistungsdatum für diese Rechnung: {{ invoice.date }}</p>
+          <p>Leistungsdatum für diese Rechnung: {{ date.start }}</p>
           <p>Mit freundlichen Grüßen</p>
           <p>{{ users.name }} (e.h.)</p>
         </div>
@@ -230,5 +247,13 @@
       <p>UID: {{ account.uid }}</p>
       <p>Gerichtsstand: {{ account.court }}</p>
     </div>
+
+    <a
+      class="mail-to"
+      href="mailto:moldascheltransporte?subject=Rechnung%20{{
+        date.start
+      }}&&body=Anbei Rechnung"
+      >Email</a
+    >
   </body>
 </html>
