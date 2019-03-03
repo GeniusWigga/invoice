@@ -71,8 +71,8 @@ const getDates = () => {
   );
 
   return {
-    start: isBefore ? dateStart : dateMiddle,
-    end: isBefore ? dateMiddle : dateEnd,
+    start: process.env.DATE_START || isBefore ? dateStart : dateMiddle,
+    end: process.env.DATE_END || isBefore ? dateMiddle : dateEnd,
     current: dateCurrent,
     middle: dateMiddle
   };
