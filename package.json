@@ -3,23 +3,35 @@
   "productName": "invoice",
   "version": "1.0.0",
   "description": "Invoice",
+  "bin": "index.js",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=production node index.js",
     "dev": "node index.js",
-    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check",
+    "build": "rm -rf build && pkg . --out-path build",
+    "postbuild": "cp -R ./node_modules/puppeteer/.local-chromium build/chromium"
   },
   "keywords": [],
   "author": "konstantinaxt",
   "license": "MIT",
   "dependencies": {
-    "accounting": "^0.4.1",
-    "dayjs": "^1.8.8",
+    "accounting": "0.4.1",
+    "dayjs": "1.8.8",
     "handlebars": "4.1.0",
     "lodash": "4.17.11",
     "lowdb": "1.0.0",
     "piping": "1.0.0-rc.4",
     "puppeteer": "1.12.2"
+  },
+  "pkg": {
+    "assets": [
+      "services/**/*",
+      "db/**/*"
+    ],
+    "targets": [
+      "node10-win32"
+    ]
   },
   "devDependencies": {
     "eslint-config-prettier": "4.1.0"
