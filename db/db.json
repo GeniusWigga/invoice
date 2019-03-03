@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Waldemar Axt",
+      "company": "Axt Kurierdienst",
+      "phone": "0871/14248199",
+      "mobile": "0176/10345495",
+      "email": "axtmarina@hotmail.de",
+      "street": "Sterletweg 3",
+      "zip": "84036",
+      "city": "Landshut",
+      "country": "Deutschland",
+      "account": [
+        {
+          "id": 1,
+          "name": "Raiffeisenbank Altdorf - Ergolding",
+          "iban": "DE42743626630005727820",
+          "bic": "GENODEF1ERG",
+          "uid": "132/201/91162",
+          "court": "Landshut, Deutschland"
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "id": "KD000002",
+      "company": "Transporte Moldaschel",
+      "name": "Artur Moldaschel",
+      "street": "Boschstr. 2",
+      "zip": "84051",
+      "city": "Altheim",
+      "country": "Deutschland"
+    }
+  ]
+}

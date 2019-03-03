@@ -5,14 +5,19 @@
   "description": "Invoice",
   "main": "index.js",
   "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "dev": "node index.js",
     "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
   },
   "keywords": [],
   "author": "konstantinaxt",
   "license": "MIT",
   "dependencies": {
-    "handlebars": "^4.1.0",
-    "lowdb": "^1.0.0"
+    "handlebars": "4.1.0",
+    "lodash": "4.17.11",
+    "lowdb": "1.0.0",
+    "piping": "1.0.0-rc.4",
+    "puppeteer": "1.12.2"
   },
   "devDependencies": {
     "eslint-config-prettier": "4.1.0"

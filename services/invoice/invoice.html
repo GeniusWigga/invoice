@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Invoice</title>
+    <meta name="author" content="" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:400,700"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        padding: 50px;
+        box-sizing: border-box;
+        border: 1px solid #cecece;
+        font-family: "Lato", sans-serif;
+        font-size: 14px;
+        height: 293mm;
+        width: 210mm;
+        margin: 0 auto;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      p,
+      li {
+        line-height: 1.5;
+      }
+
+      tr td:last-of-type {
+        text-align: right;
+      }
+
+      .infos {
+        padding: 30px 0;
+      }
+
+      .client-invoice-wrapper {
+        display: flex;
+      }
+
+      .users-info-bar {
+        font-size: 12px;
+        color: #cecece;
+        margin: 0;
+        padding-bottom: 10px;
+      }
+
+      .subject {
+        padding-top: 50px;
+      }
+
+      .subject h2 {
+        margin: 0;
+      }
+
+      .user-info-wrapper {
+        display: flex;
+      }
+
+      .invoice-info {
+        margin-left: auto;
+        min-width: 200px;
+      }
+
+      .user-info {
+        margin: 0 0 0 auto;
+        list-style: none;
+        padding: 0;
+        text-align: right;
+      }
+
+      .service {
+        padding-top: 50px;
+      }
+
+      .service-table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      .service-table td {
+        padding: 5px 0;
+      }
+
+      .account {
+        font-size: 12px;
+        margin-top: auto;
+        border-top: 1px solid black;
+        padding-top: 20px;
+      }
+
+      .account p {
+        margin: 0;
+      }
+
+      .account p:first-of-type {
+        margin-bottom: 20px;
+      }
+
+      .service-table thead {
+        font-weight: bold;
+        border-top: 1px solid #cecece;
+      }
+
+      .border {
+        border-top: 1px solid #cecece;
+      }
+
+      .service-table tbody tr:first-of-type {
+        border-bottom: 1px solid #cecece;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="user-info-wrapper">
+        <ul class="user-info">
+          <li>
+            <strong>{{ users.company }}</strong>
+          </li>
+          <li>{{ users.email }}</li>
+          <li>{{ users.phone }}</li>
+          <li>{{ users.mobile }}</li>
+          <li>
+            <strong>{{ users.street }}</strong>
+          </li>
+          <li>
+            <strong>{{ users.zip }} {{ users.city }}</strong>
+          </li>
+          <li>
+            <strong>{{ users.country }}</strong>
+          </li>
+        </ul>
+      </div>
+
+      <div class="infos">
+        <div class="client-invoice-wrapper">
+          <div>
+            <p class="users-info-bar">
+              {{ users.company }}, {{ users.street }}, {{ users.zip }}
+              {{ users.city }}, {{ users.country }}
+            </p>
+            <ul class="clients-info">
+              <li>{{ clients.company }}</li>
+              <li>{{ clients.name }}</li>
+              <li>{{ clients.street }}</li>
+              <li>{{ clients.zip }} {{ clients.city }}</li>
+            </ul>
+          </div>
+
+          <table class="invoice-info">
+            <tbody>
+              <tr>
+                <td>Rechnungsdatum:</td>
+                <td>{{ invoice.date }}</td>
+              </tr>
+              <tr>
+                <td>Kundennummer:</td>
+                <td>{{ clients.id }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </header>
+    <div class="subject">
+      <h2>Rechnung {{ invoice.invoiceId }}</h2>
+    </div>
+    <div class="invoice-content">
+      <p>Sehr geehrte Damen und Herren</p>
+
+      <div class="service">
+        <table class="service-table">
+          <tbody>
+            <thead>
+              <td>Leistung</td>
+              <td></td>
+              <td>Preis</td>
+            </thead>
+            <tr>
+              <td>
+                {{ invoice.count }} x Post. Für die geleisteten Fahrten vom
+                {{ invoice.period }}
+              </td>
+              <td></td>
+              <td>{{ invoice.price }} €</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Zwischensumme: (exkl. USt):</td>
+              <td>{{ invoice.subTotal }} €</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Umsatzsteuer:</td>
+              <td>{{ invoice.vac }} €</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td class="border"><strong>Rechnungsbetrag:</strong></td>
+              <td class="border">
+                <strong>{{ invoice.total }} €</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <p>Bitte überweisen Sie den Rechnungsbetrag.</p>
+          <p>Leistungsdatum für diese Rechnung: {{ invoice.date }}</p>
+          <p>Mit freundlichen Grüßen</p>
+          <p>{{ users.name }} (e.h.)</p>
+        </div>
+      </div>
+    </div>
+    <div class="account">
+      <p>Bankverbindung: {{ account.name }}</p>
+      <p>IBAN: {{ account.iban }}, BIC: {{ account.bic }}</p>
+      <p>UID: {{ account.uid }}</p>
+      <p>Gerichtsstand: {{ account.court }}</p>
+    </div>
+  </body>
+</html>
