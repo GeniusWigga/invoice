@@ -89,6 +89,8 @@ const getFormattedMoney = v =>
 
 const getHtmlContent = async () => {
   const db = low(new FileSync(dbPath));
+  const clientId = process.env.CLIENT_ID || "KD000002";
+
   const users = db
     .get("users")
     .find({ id: 1 })
@@ -96,7 +98,7 @@ const getHtmlContent = async () => {
 
   const clients = db
     .get("clients")
-    .find({ id: "KD000002" })
+    .find({ id: clientId })
     .value();
 
   const account = db
