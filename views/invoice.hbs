@@ -57,7 +57,7 @@
           <tbody>
           <tr>
             <td>Rechnungsdatum:</td>
-            <td>{{ date.end }}</td>
+            <td><input value="{{ date.end }}" /></td>
           </tr>
           <tr>
             <td>Kundennummer:</td>
@@ -69,7 +69,7 @@
     </div>
   </header>
   <div class="subject">
-    <h2>Rechnung {{ invoice.id }}</h2>
+    <h2>Rechnung <input value="{{ invoice.id }}" /></h2>
   </div>
   <div class="invoice-content">
     <p>Sehr geehrte Damen und Herren</p>
@@ -84,8 +84,8 @@
         </thead>
         <tr>
           <td>
-            {{ invoice.count }} x Post. Für die geleisteten Fahrten vom
-            {{ date.start }} - {{ date.end }}
+            <input value="{{ invoice.count }}" /> x Post. Für die geleisteten Fahrten vom
+            <input value="{{ date.start }}" /> - <input value="{{ date.end }}" />
           </td>
           <td></td>
           <td>{{ invoice.price }}</td>
@@ -111,7 +111,7 @@
       </table>
       <div>
         <p>Bitte überweisen Sie den Rechnungsbetrag.</p>
-        <p>Leistungsdatum für diese Rechnung: {{ date.end }}</p>
+        <p>Leistungsdatum für diese Rechnung: <input value="{{ date.end }}" /></p>
         <p>Mit freundlichen Grüßen</p>
         <p>{{ users.name }} (e.h.)</p>
       </div>
