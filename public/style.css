@@ -1,0 +1,146 @@
+body {
+  font-family: "Lato", sans-serif;
+  width: 210mm;
+  margin: 50px auto;
+}
+
+.invoice {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  box-sizing: border-box;
+  border: 1px solid #CECECE;
+  font-size: 14px;
+  height: 275mm;
+  width: 210mm;
+  margin: 0 auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+p,
+li {
+  line-height: 1.5;
+}
+
+tr td:last-of-type {
+  text-align: right;
+}
+
+.infos {
+  padding: 30px 0;
+}
+
+.client-invoice-wrapper {
+  display: flex;
+}
+
+.users-info-bar {
+  font-size: 12px;
+  color: #CECECE;
+  margin: 0;
+  padding-bottom: 10px;
+}
+
+.subject {
+  padding-top: 50px;
+}
+
+.subject h2 {
+  margin: 0;
+}
+
+.user-info-wrapper {
+  display: flex;
+}
+
+.invoice-info {
+  margin-left: auto;
+  min-width: 200px;
+}
+
+.user-info {
+  margin: 0 0 0 auto;
+  list-style: none;
+  padding: 0;
+  text-align: right;
+}
+
+.service {
+  padding-top: 50px;
+}
+
+.service-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.service-table td {
+  padding: 5px 0;
+}
+
+.account {
+  font-size: 12px;
+  margin-top: auto;
+  border-top: 1px solid black;
+  padding-top: 20px;
+}
+
+.account p {
+  margin: 0;
+}
+
+.account p:first-of-type {
+  margin-bottom: 20px;
+}
+
+.service-table thead {
+  font-weight: bold;
+  border-top: 1px solid #CECECE;
+}
+
+.border {
+  border-top: 1px solid #CECECE;
+}
+
+.service-table tbody tr:first-of-type {
+  border-bottom: 1px solid #CECECE;
+}
+
+.button {
+  outline: none;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  border-bottom: 1px solid black;
+  border-right: 0;
+  border-left: 0;
+  border-top: 0;
+  margin-top: 30px;
+  display: inline-block;
+  padding: 10px 0 5px 0;
+  color: black;
+}
+
+.pdf {
+  margin-left: 10px;
+}
+
+@media print {
+  body {
+    margin: 0;
+  }
+
+  .invoice {
+    border: none;
+  }
+
+  .button {
+    display: none;
+  }
+}

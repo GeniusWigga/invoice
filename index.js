@@ -1,7 +1,7 @@
 const _ = require("lodash");
-const http = require("http");
+const express = require("express");
+const exphbs = require("express-handlebars");
 const path = require("path");
-const pdfService = require("./services/invoice/pdf.js");
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
 const dayjs = require("dayjs");
@@ -10,7 +10,6 @@ const accounting = require("accounting");
 
 dayjs.extend(customParseFormat);
 
-const hostname = "127.0.0.1";
 const port = 3000;
 
 const VAC = 0.19;
@@ -29,23 +28,7 @@ if (process.env.NODE_ENV !== "production") {
   }
 }
 
-const invoiceHtmlPath = path.join(
-  __dirname,
-  "services",
-  "invoice",
-  "invoice.html"
-);
-const invoiceStylePath = path.join(
-  __dirname,
-  "services",
-  "invoice",
-  "css",
-  "style.css"
-);
-
 const dbPath = path.join(__dirname, "db", "db.json");
-const PDF_PATH = "pdf";
-const EMAIL_PATH = "email";
 
 const getTotalPrice = (price, count) => {
   return price * count;
@@ -62,17 +45,24 @@ const getDates = () => {
   const dateEnd = dayjs()
     .endOf("month")
     .format(DATE_FORMAT);
-  const dateCurrent = dayjs().format(DATE_FORMAT);
-  const currentMonth = dayjs().format("MM");
-  const currentYear = dayjs().format("YYYY");
+  const dateCurrent = dayjs()
+    .format(DATE_FORMAT);
+  const currentMonth = dayjs()
+    .format("MM");
+  const currentYear = dayjs()
+    .format("YYYY");
   const dateMiddle = [DAY_MIDDLE, currentMonth, currentYear].join(".");
-  const isBefore = dayjs(dateCurrent, DATE_FORMAT).isBefore(
-    dayjs(dateMiddle, DATE_FORMAT)
-  );
+  const isBefore = dayjs(dateCurrent, DATE_FORMAT)
+    .isBefore(
+      dayjs(dateMiddle, DATE_FORMAT)
+    );
+
+  const startDateFromEnv = process.env.DATE_START;
+  const endDateFromEnv = process.env.DATE_END;
 
   return {
-    start: process.env.DATE_START || isBefore ? dateStart : dateMiddle,
-    end: process.env.DATE_END || isBefore ? dateMiddle : dateEnd,
+    start: !_.isNil(startDateFromEnv) ? startDateFromEnv : isBefore ? dateStart : dateMiddle,
+    end: !_.isNil(endDateFromEnv) ? endDateFromEnv : isBefore ? dateMiddle : dateEnd,
     current: dateCurrent,
     middle: dateMiddle
   };
@@ -87,7 +77,16 @@ const getFormattedMoney = v =>
     precision: 2
   });
 
-const getHtmlContent = async () => {
+const app = express();
+const hbs = exphbs.create({ /* config */ });
+
+app.engine("hbs", hbs.engine);
+app.set("view engine", "hbs");
+
+app.use(express.static(path.join(__dirname, "public")));
+
+app.get("/", function(req, res) {
+
   const db = low(new FileSync(dbPath));
   const clientId = process.env.CLIENT_ID || "KD000002";
 
@@ -112,9 +111,10 @@ const getHtmlContent = async () => {
 
   const price = process.env.PRICE || 140;
   const count = process.env.COUNT || 12;
+  const invoiceIdFromEnv = process.env.INVOICE_ID;
 
   const invoice = {
-    id: dates.start,
+    id: _.isNil(invoiceIdFromEnv) ? dates.start : invoiceIdFromEnv,
     count: count,
     price: getFormattedMoney(price)
   };
@@ -127,41 +127,17 @@ const getHtmlContent = async () => {
   invoice.vac = getFormattedMoney(vac);
   invoice.total = getFormattedMoney(total);
 
-  const htmlContent = await pdfService.html(invoiceHtmlPath, {
+  const data = {
     clients: clients,
     users: users,
     account: account,
     invoice: invoice,
     date: dates
-  });
+  };
 
-  return htmlContent;
-};
-
-const server = http.createServer(async (req, res) => {
-  const url = req.url;
-  const path = _.get(_.split(url, "/"), 1);
-
-  try {
-    const htmlContent = await getHtmlContent();
-
-    if (path === PDF_PATH) {
-      const pdfContent = await pdfService.pdf(htmlContent);
-      res.setHeader("Content-Type", "application/pdf");
-      return res.end(pdfContent);
-    }
-
-    res.setHeader("Content-Type", "text/html");
-    res.statusCode = 200;
-    res.end(htmlContent);
-  } catch (error) {
-    console.log("error: ", error);
-    res.setHeader("Content-Type", "text/plain");
-    res.statusCode = 400;
-    res.end(error);
-  }
+  res.render("invoice", data);
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, function() {
+  console.log(`Server running at http://127.0.0.1:${port}/`);
 });

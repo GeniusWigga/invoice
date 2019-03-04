@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Invoice</title>
+  <meta name="author" content="" />
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link
+    href="https://fonts.googleapis.com/css?family=Lato:400,700"
+    rel="stylesheet"
+  />
+
+  <link href="/style.css" rel="stylesheet" />
+</head>
+
+<body>
+<div class="invoice">
+  <header>
+    <div class="user-info-wrapper">
+      <ul class="user-info">
+        <li>
+          <strong>{{ users.company }}</strong>
+        </li>
+        <li>{{ users.email }}</li>
+        <li>{{ users.phone }}</li>
+        <li>{{ users.mobile }}</li>
+        <li>
+          <strong>{{ users.street }}</strong>
+        </li>
+        <li>
+          <strong>{{ users.zip }} {{ users.city }}</strong>
+        </li>
+        <li>
+          <strong>{{ users.country }}</strong>
+        </li>
+      </ul>
+    </div>
+
+    <div class="infos">
+      <div class="client-invoice-wrapper">
+        <div>
+          <p class="users-info-bar">
+            {{ users.company }}, {{ users.street }}, {{ users.zip }}
+            {{ users.city }}, {{ users.country }}
+          </p>
+          <ul class="clients-info">
+            <li>{{ clients.company }}</li>
+            <li>{{ clients.name }}</li>
+            <li>{{ clients.street }}</li>
+            <li>{{ clients.zip }} {{ clients.city }}</li>
+          </ul>
+        </div>
+
+        <table class="invoice-info">
+          <tbody>
+          <tr>
+            <td>Rechnungsdatum:</td>
+            <td>{{ date.end }}</td>
+          </tr>
+          <tr>
+            <td>Kundennummer:</td>
+            <td>{{ clients.id }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </header>
+  <div class="subject">
+    <h2>Rechnung {{ invoice.id }}</h2>
+  </div>
+  <div class="invoice-content">
+    <p>Sehr geehrte Damen und Herren</p>
+
+    <div class="service">
+      <table class="service-table">
+        <tbody>
+        <thead>
+        <td>Leistung</td>
+        <td></td>
+        <td>Preis</td>
+        </thead>
+        <tr>
+          <td>
+            {{ invoice.count }} x Post. Für die geleisteten Fahrten vom
+            {{ date.start }} - {{ date.end }}
+          </td>
+          <td></td>
+          <td>{{ invoice.price }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Zwischensumme: (exkl. USt):</td>
+          <td>{{ invoice.subTotal }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>Umsatzsteuer:</td>
+          <td>{{ invoice.vac }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="border"><strong>Rechnungsbetrag:</strong></td>
+          <td class="border">
+            <strong>{{ invoice.total }}</strong>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div>
+        <p>Bitte überweisen Sie den Rechnungsbetrag.</p>
+        <p>Leistungsdatum für diese Rechnung: {{ date.end }}</p>
+        <p>Mit freundlichen Grüßen</p>
+        <p>{{ users.name }} (e.h.)</p>
+      </div>
+    </div>
+  </div>
+  <div class="account">
+    <p>Bankverbindung: {{ account.name }}</p>
+    <p>IBAN: {{ account.iban }}, BIC: {{ account.bic }}</p>
+    <p>UID: {{ account.uid }}</p>
+    <p>Gerichtsstand: {{ account.court }}</p>
+  </div>
+</div>
+
+<a
+  class="button"
+  href="mailto:{{ clients.email }}?subject=Rechnung%20{{
+  date.start
+  }}&&body=Anbei Rechnung"
+>Email</a
+>
+<button class="button pdf">PDF</button>
+<script src="/js/jquery.js"></script>
+<script src="/js/index.js"></script>
+</body>
+</html>
