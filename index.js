@@ -82,6 +82,7 @@ const hbs = exphbs.create({ /* config */ });
 
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
+app.set('views', path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -109,12 +110,12 @@ app.get("/", function(req, res) {
 
   const dates = getDates();
 
-  const price = process.env.PRICE || 140;
-  const count = process.env.COUNT || 12;
-  const invoiceIdFromEnv = process.env.INVOICE_ID;
+  const price = 140;
+  const count = 12;
+  const invoiceId = "RE000000";
 
   const invoice = {
-    id: _.isNil(invoiceIdFromEnv) ? dates.start : invoiceIdFromEnv,
+    id: invoiceId,
     count: count,
     price: getFormattedMoney(price)
   };
@@ -126,6 +127,7 @@ app.get("/", function(req, res) {
   invoice.subTotal = getFormattedMoney(subTotal);
   invoice.vac = getFormattedMoney(vac);
   invoice.total = getFormattedMoney(total);
+  invoice.title = invoiceId;
 
   const data = {
     clients: clients,

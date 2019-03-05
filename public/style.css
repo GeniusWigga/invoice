@@ -37,7 +37,7 @@ tr td:last-of-type {
   box-sizing: border-box;
   border: 1px solid #CECECE;
   font-size: 14px;
-  height: 275mm;
+  height: 296mm;
   width: 210mm;
   margin: 0 auto;
 }
@@ -140,6 +140,28 @@ tr td:last-of-type {
 
 .pdf {
   margin-left: 10px;
+}
+
+.invoice-info .input-date {
+  text-align: right;
+}
+
+.input-date {
+  text-align: center;
+  width: 75px;
+}
+
+.input-count {
+  width: 20px;
+}
+
+.input-invoice-id {
+  width: 100px;
+}
+
+.input-price {
+  width: 80px;
+  text-align: right;
 }
 
 @media print {

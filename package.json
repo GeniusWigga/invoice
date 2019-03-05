@@ -27,6 +27,7 @@
   "pkg": {
     "assets": [
       "public/**/*",
+      "views/**/*",
       "db/**/*"
     ],
     "targets": [
